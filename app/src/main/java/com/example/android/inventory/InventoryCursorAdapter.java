@@ -59,34 +59,33 @@ public class InventoryCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         // Find individual views that we want to modify in the list item layout
         TextView nameTextView = (TextView) view.findViewById(R.id.name);
-        TextView summaryTextView = (TextView) view.findViewById(R.id.summary);
+        TextView summaryTextView = (TextView) view.findViewById(R.id.supplier);
         TextView quantityTextView = (TextView) view.findViewById(R.id.quantity);
 
         // Find the columns of pet attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_NAME);
-        int breedColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_SUPPLIER_NAME);
+        int supplierColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_SUPPLIER_NAME);
         int quantityColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_QUANTITY);
 
         // Read the pet attributes from the Cursor for the current pet
-        String petName = cursor.getString(nameColumnIndex);
-        String petBreed = cursor.getString(breedColumnIndex);
-        //int quantity = cursor.getInt(quantityColumnIndex);
+        String productName = cursor.getString(nameColumnIndex);
+        String supplierName = cursor.getString(supplierColumnIndex);
+        int quantity = cursor.getInt(quantityColumnIndex);
 
         Log.v("HERE", "name " + nameColumnIndex);
-        Log.v("HERE", "supplier " + breedColumnIndex);
+        Log.v("HERE", "supplier " + supplierColumnIndex);
         Log.v("HERE", "quantity " + quantityColumnIndex);
 
         // If the pet breed is empty string or null, then use some default text
         // that says "Unknown breed", so the TextView isn't blank.
-        if (TextUtils.isEmpty(petBreed)) {
-            petBreed = context.getString(R.string.unknown_breed);
+        if (TextUtils.isEmpty(supplierName)) {
+            supplierName = context.getString(R.string.unknown_supplier);
         }
 
         // Update the TextViews with the attributes for the current pet
-        nameTextView.setText(petName);
-        summaryTextView.setText(petBreed);
-        //quantityTextView.setText(Integer.toString(quantity));
-
+        nameTextView.setText(productName);
+        summaryTextView.setText(supplierName);
+        quantityTextView.setText(Integer.toString(quantity));
     }
 }
 

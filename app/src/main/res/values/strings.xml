@@ -106,7 +106,7 @@
     <string name="cancel">Cancel</string>
 
     <!-- Label for the pet's breed if the breed is unknown [CHAR LIMIT=20] -->
-    <string name="unknown_breed">Unknown breed</string>
+    <string name="unknown_supplier">Unknown supplier</string>
 
 
 </resources>
