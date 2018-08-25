@@ -21,7 +21,9 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 /**
- * API Contract for the Pets app.
+ * API Contract for the Produdts app.
+ * acts as a buffer between the user and database makes the program harder to break
+ *
  */
 public final class InventoryContract {
 
@@ -34,6 +36,7 @@ public final class InventoryContract {
      * relationship between a domain name and its website.  A convenient string to use for the
      * content authority is the package name for the app, which is guaranteed to be unique on the
      * device.
+     * should try to understand this better at some point but essentially  and address to find the database (I hope)
      */
     public static final String CONTENT_AUTHORITY = "com.example.android.inventory";
 
@@ -52,22 +55,19 @@ public final class InventoryContract {
     public static final String PATH_INVENTORY = "inventory";
 
     /**
-     * Inner class that defines constant values for the pets database table.
-     * Each entry in the table represents a single pet.
+     * Inner class that defines constant values for the products database table.
+     * Each entry in the table represents a single products.
      */
     public static final class ProductEntry implements BaseColumns {
 
-        /** The content URI to access the pet data in the provider */
+        /** The content URI to access the product data in the provider */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_INVENTORY);
 
         /**
-         * The MIME type of the {@link #CONTENT_URI} for a list of pets.
+         * The MIME type of the {@link #CONTENT_URI} for a list of products.
          */
         public static final String CONTENT_LIST_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_INVENTORY;
-
-
-
 
         /**
          * The MIME type of the {@link #CONTENT_URI} for a single pet.
@@ -76,7 +76,7 @@ public final class InventoryContract {
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_INVENTORY;
 
 
-        /** Name of database table for pets */
+        /** Name of database table for products */
         public final static String TABLE_NAME = "inventory";
 
         /**
@@ -87,7 +87,7 @@ public final class InventoryContract {
         public final static String _ID = BaseColumns._ID;
 
         /**
-         * Name of the pet.
+         * Name of the product.
          *
          * Type: TEXT
          */
@@ -104,7 +104,7 @@ public final class InventoryContract {
         public final static String COLUMN_PRICE = "price";
 
         /**
-         * Weight of the pet.
+         * quantity of product.
          *
          * Type: INTEGER
          */

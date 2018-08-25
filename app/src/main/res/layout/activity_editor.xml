@@ -150,4 +150,31 @@
 
 
     </LinearLayout>
+
+    <!-- should be made prettier at some point  -->
+    <LinearLayout
+        android:id="@+id/container_extras"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <!-- Label -->
+        <Button
+            android:text="Add One"
+            android:id="@+id/add_one"
+            style="@style/CategoryStyle" />
+
+        <!-- Label -->
+        <Button
+            android:text="Subtract One"
+            android:id="@+id/subtract_one"
+            style="@style/CategoryStyle" />
+        <!-- Label -->
+        <Button
+            android:text="call"
+            android:id="@+id/phone_call"
+            style="@style/CategoryStyle" />
+
+
+    </LinearLayout>
 </LinearLayout>

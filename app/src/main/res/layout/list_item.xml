@@ -38,7 +38,7 @@
         android:text="5"/>
     </LinearLayout>
 
-    <TextView
+    <Button
         android:id="@+id/order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +46,8 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
         android:textSize="24dp"
-        android:text="order" />
+        android:text="order"
+        android:focusable="false"/>
 
 
 </RelativeLayout>

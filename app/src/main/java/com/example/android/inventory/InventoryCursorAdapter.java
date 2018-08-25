@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
@@ -19,6 +20,9 @@ import com.example.android.inventory.data.InventoryContract.ProductEntry;
  */
 public class InventoryCursorAdapter extends CursorAdapter {
 
+    //private boolean clicked;
+    private Button mOrder;
+    //int quantity;
     /**
      * Constructs a new {@link InventoryCursorAdapter}.
      *
@@ -71,6 +75,23 @@ public class InventoryCursorAdapter extends CursorAdapter {
         String productName = cursor.getString(nameColumnIndex);
         String supplierName = cursor.getString(supplierColumnIndex);
         int quantity = cursor.getInt(quantityColumnIndex);
+
+
+        mOrder = view.findViewById(R.id.order);
+        //clicked=false;
+
+
+
+        //my button clicked
+        mOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                    Log.v("CLICKED", "quantity");
+                //}
+
+            }
+        });
 
         Log.v("HERE", "name " + nameColumnIndex);
         Log.v("HERE", "supplier " + supplierColumnIndex);

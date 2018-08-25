@@ -22,14 +22,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.android.inventory.data.InventoryContract.ProductEntry;
 
 /**
- * Database helper for Pets app. Manages database creation and version management.
+ * Database helper for Productss app. Manages database creation and version management.
+ * builds databas with sqlite commands!!
  */
 public class InvenotryDbHelper extends SQLiteOpenHelper {
 
     public static final String LOG_TAG = InvenotryDbHelper.class.getSimpleName();
 
     /** Name of the database file */
-    private static final String DATABASE_NAME = "shelter.db";
+    private static final String DATABASE_NAME = "inventory.db";
 
     /**
      * Database version. If you change the database schema, you must increment the database version.
@@ -65,6 +66,7 @@ public class InvenotryDbHelper extends SQLiteOpenHelper {
 
     /**
      * This is called when the database needs to be upgraded.
+     * things are added or deleted presumably
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

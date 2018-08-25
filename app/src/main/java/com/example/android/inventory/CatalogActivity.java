@@ -31,7 +31,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.android.inventory.data.InventoryContract;
 import com.example.android.inventory.data.InventoryContract.ProductEntry;
@@ -42,7 +44,8 @@ import com.example.android.inventory.data.InventoryContract.ProductEntry;
  */
 public class CatalogActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final int PET_LOADER = 0;
+    private static final int PRODUCT_LOADER = 0;
+
 
     InventoryCursorAdapter mCursorAdapter;
 
@@ -61,55 +64,62 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
             }
         });
 
-        // Find the ListView which will be populated with the pet data
-        ListView petListView = (ListView) findViewById(R.id.list);
+        // Find the ListView which will be populated with the product data
+        ListView productListView = (ListView) findViewById(R.id.list);
 
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
         View emptyView = findViewById(R.id.empty_view);
-        petListView.setEmptyView(emptyView);
+        productListView.setEmptyView(emptyView);
 
         mCursorAdapter = new InventoryCursorAdapter(this, null);
-        petListView.setAdapter(mCursorAdapter);
+        productListView.setAdapter(mCursorAdapter);
 
         // Kick off the loader
-        getLoaderManager().initLoader(PET_LOADER, null, this);
+        getLoaderManager().initLoader(PRODUCT_LOADER, null, this);
 
-        petListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        //listening for when a list item is pressed just need to figure out how to make it so listen to only when order is pressed
+        productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
-                Uri currentPetUri = ContentUris.withAppendedId(InventoryContract.ProductEntry.CONTENT_URI, id);
 
-                intent.setData(currentPetUri);
+
+
+
+                Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
+                Uri currentProductUri = ContentUris.withAppendedId(InventoryContract.ProductEntry.CONTENT_URI, id);
+
+                intent.setData(currentProductUri);
 
                 startActivity(intent);
+                Log.v("PLV", "I WAS PRESSED");
 
             }
+
         });
+
+
 
     }
 
-
-
-
-
     /**
 
-     * Helper method to insert hardcoded pet data into the database. For debugging purposes only.
+     * Helper method to insert hardcoded product data into the database. For debugging purposes only.
      */
-    private void insertPet() {
+    private void insertProduct() {
         // Create a ContentValues object where column names are the keys,
-        // and Toto's pet attributes are the values.
+        // and fake product attributes are the values.
         ContentValues values = new ContentValues();
-        values.put(InventoryContract.ProductEntry.COLUMN_PRODUCT_NAME, "Toto");
-        values.put(InventoryContract.ProductEntry.COLUMN_SUPPLIER_NAME, "Terrier");
+        values.put(InventoryContract.ProductEntry.COLUMN_PRODUCT_NAME, "Pro-ducks");
+        values.put(InventoryContract.ProductEntry.COLUMN_SUPPLIER_NAME, "Sup-lie-R");
         values.put(InventoryContract.ProductEntry.COLUMN_PRICE, 1);
         values.put(InventoryContract.ProductEntry.COLUMN_QUANTITY, 7);
+        values.put(InventoryContract.ProductEntry.COLUMN_PHONE, 7777777);
 
-        // Insert a new row for Toto into the provider using the ContentResolver.
+        // Insert a new row for prod-ducks into the provider using the ContentResolver.
         // Use the {@link ProductEntry#CONTENT_URI} to indicate that we want to insert
-        // into the pets database table.
-        // Receive the new content URI that will allow us to access Toto's data in the future.
+        // into the products database table.
+        // Receive the new content URI that will allow us to access pro-ducks data in the future.
         Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
     }
 
@@ -127,21 +137,22 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
         switch (item.getItemId()) {
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
-                insertPet();
+                insertProduct();
                 return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
-                deleteAllPets();
+                deleteAllProducts();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void deleteAllPets() {
+    private void deleteAllProducts() {
         int rowsDeleted = getContentResolver().delete(InventoryContract.ProductEntry.CONTENT_URI, null, null);
-        Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
+        Log.v("CatalogActivity", rowsDeleted + " rows deleted from product database");
     }
 
+    //gets the three items i need for my lists
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 

@@ -15,6 +15,7 @@
  */
 package com.example.android.inventory;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
@@ -22,9 +23,11 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -33,6 +36,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -66,6 +70,11 @@ public class EditorActivity extends AppCompatActivity implements
     /** EditText field to enter the pet's gender */
     private EditText mPhoneEditText;
 
+    private Button mAddOne;
+
+    private Button mSubtractOne;
+
+    private Button mCall;
 
     /** Boolean flag that keeps track of whether the pet has been edited (true) or not (false) */
     private boolean mProductHasChanged = false;
@@ -115,6 +124,61 @@ public class EditorActivity extends AppCompatActivity implements
         mQuantityEditText = (EditText) findViewById(R.id.edit_quantity);
         mPriceEditText = (EditText) findViewById(R.id.edit_price);
         mPhoneEditText = (EditText) findViewById(R.id.edit_phone);
+        mAddOne = (Button) findViewById(R.id.add_one);
+        mSubtractOne = (Button) findViewById(R.id.subtract_one);
+        mCall = (Button) findViewById(R.id.phone_call);
+
+
+        //when pressed adds one to quantity
+        mAddOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String quantityString = mQuantityEditText.getText().toString().trim();
+                int quantity = Integer.parseInt(quantityString);
+                quantity++;
+                quantityString = Integer.toString(quantity);
+                mQuantityEditText.setText(quantityString);
+                Log.v("add one", "I was pressed" + quantity);
+                // add your edit codes
+            }
+        });
+
+        //when pressed subtracts one from quantity
+        mSubtractOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String quantityString = mQuantityEditText.getText().toString().trim();
+                int quantity = Integer.parseInt(quantityString);
+                //stops it from going below zero
+                if (quantity >0 ) {
+                    quantity--;
+                    quantityString = Integer.toString(quantity);
+                    mQuantityEditText.setText(quantityString);
+                    Log.v("subtract one", "I was pressed" + quantity);
+
+                }
+            }
+        });
+
+        //use intent to call supplier when pressed
+        mCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String phoneString = mPhoneEditText.getText().toString().trim();
+                Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
+                String uri = "tel:" + phoneString ;
+                phoneIntent.setData(Uri.parse(uri));
+
+
+                startActivity(phoneIntent);
+                Log.v("HELLO", "I was pressed" + uri);
+
+                }
+
+        });
+
+
 
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
@@ -124,7 +188,7 @@ public class EditorActivity extends AppCompatActivity implements
         mQuantityEditText.setOnTouchListener(mTouchListener);
         mPriceEditText.setOnTouchListener(mTouchListener);
         mPhoneEditText.setOnTouchListener(mTouchListener);
-
+        mAddOne.setOnTouchListener(mTouchListener);// not the heart of the matter but should be done
     }
 
     /**
