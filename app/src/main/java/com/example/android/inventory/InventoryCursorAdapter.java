@@ -60,7 +60,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
      *                correct row.
      */
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, Cursor cursor) {
         // Find individual views that we want to modify in the list item layout
         TextView nameTextView = (TextView) view.findViewById(R.id.name);
         TextView summaryTextView = (TextView) view.findViewById(R.id.supplier);
@@ -70,12 +70,13 @@ public class InventoryCursorAdapter extends CursorAdapter {
         int nameColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_NAME);
         int supplierColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_SUPPLIER_NAME);
         int quantityColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_QUANTITY);
+        int idColumnIndex = cursor.getColumnIndex(ProductEntry._ID);
 
         // Read the pet attributes from the Cursor for the current pet
         String productName = cursor.getString(nameColumnIndex);
         String supplierName = cursor.getString(supplierColumnIndex);
-        int quantity = cursor.getInt(quantityColumnIndex);
-
+        final int quantity = cursor.getInt(quantityColumnIndex);
+        final int id = cursor.getInt(idColumnIndex);
 
         mOrder = view.findViewById(R.id.order);
         //clicked=false;
@@ -87,7 +88,11 @@ public class InventoryCursorAdapter extends CursorAdapter {
             @Override
             public void onClick(View view)
             {
-                    Log.v("CLICKED", "quantity");
+
+                CatalogActivity Activity = (CatalogActivity) context;
+
+                Activity.orderProduct(id, quantity);
+                    Log.v("CLICKED", "quantity " + Activity);
                 //}
 
             }

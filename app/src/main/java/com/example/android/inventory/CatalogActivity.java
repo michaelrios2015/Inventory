@@ -34,6 +34,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.inventory.data.InventoryContract;
 import com.example.android.inventory.data.InventoryContract.ProductEntry;
@@ -100,6 +101,25 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
 
 
+    }
+    //based on the work of https://github.com/Muneera-Salah/
+    public void orderProduct(int id, int quantity) {
+        //subtract from the quantity
+        quantity--;
+
+        //as long as we are still at zero or above update quantity in database
+        if (quantity >= 0) {
+            ContentValues values = new ContentValues();
+            //just like from saveProduct
+            values.put(ProductEntry.COLUMN_QUANTITY, quantity);
+            Uri updateUri = ContentUris.withAppendedId(ProductEntry.CONTENT_URI, id);
+            int rowsAffected = getContentResolver().update(updateUri, values, null, null);
+            Toast.makeText(this, "product ordered", Toast.LENGTH_SHORT).show();
+
+            Log.d("Log msg", "rowsAffected " + rowsAffected + " - id " + id + " - quantity " + quantity + " , decreaseCount has been called.");
+        } else {
+            Toast.makeText(this, "Product is sold out :( , buy another Product :)", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
