@@ -215,6 +215,13 @@ public class EditorActivity extends AppCompatActivity implements
         String priceString = mPriceEditText.getText().toString().trim();
         String phoneString = mPhoneEditText.getText().toString().trim();
 
+        /*    if (TextUtils.isEmpty(nameString)) {
+                Toast.makeText(this, "NAME", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        */
+
+
         // Check if this is supposed to be a new pet
         // and check if all the fields in the editor are blank
         if (mCurrentProductUri == null &&
@@ -225,9 +232,11 @@ public class EditorActivity extends AppCompatActivity implements
             return;
         }
 
+
         // Create a ContentValues object where column names are the keys,
         // and pet attributes from the editor are the values.
         ContentValues values = new ContentValues();
+
         values.put(ProductEntry.COLUMN_PRODUCT_NAME, nameString);
         values.put(InventoryContract.ProductEntry.COLUMN_SUPPLIER_NAME, supplierString);
         //values.put(InventoryContract.ProductEntry.COLUMN_PRICE, mGender);
@@ -254,7 +263,12 @@ public class EditorActivity extends AppCompatActivity implements
 
         // Determine if this is a new or existing pet by checking if mCurrentProductUri is null or not
         if (mCurrentProductUri == null) {
-            // This is a NEW pet, so insert a new pet into the provider,
+            // This is a NEW pet, so ins
+            //
+            //
+            //
+            //
+            // ert a new pet into the provider,
             // returning the content URI for the new pet.
             Uri newUri = getContentResolver().insert(InventoryContract.ProductEntry.CONTENT_URI, values);
 
@@ -286,7 +300,9 @@ public class EditorActivity extends AppCompatActivity implements
                         Toast.LENGTH_SHORT).show();
             }
         }
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -315,44 +331,54 @@ public class EditorActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // User clicked on a menu option in the app bar overflow menu
-        switch (item.getItemId()) {
-            // Respond to a click on the "Save" menu option
-            case R.id.action_save:
-                // Save pet to database
-                saveProduct();
-                // Exit activity
-                finish();
-                return true;
-            // Respond to a click on the "Delete" menu option
-            case R.id.action_delete:
-                // Pop up confirmation dialog for deletion
-                showDeleteConfirmationDialog();
-                return true;
-            // Respond to a click on the "Up" arrow button in the app bar
-            case android.R.id.home:
-                // If the pet hasn't changed, continue with navigating up to parent activity
-                // which is the {@link CatalogActivity}.
-                if (!mProductHasChanged) {
-                    NavUtils.navigateUpFromSameTask(EditorActivity.this);
+
+        String nameString = mNameEditText.getText().toString().trim();
+        String supplierString = mSupplierEditText.getText().toString().trim();
+
+        //check to make sure there is a product name and supplier, all other values default to 0
+        if (TextUtils.isEmpty(nameString) || TextUtils.isEmpty(supplierString)) {
+            Toast.makeText(this, getString(R.string.name_required), Toast.LENGTH_SHORT).show();
+        } else
+
+            switch (item.getItemId()) {
+                // Respond to a click on the "Save" menu option
+                case R.id.action_save:
+                    // Save pet to database
+                    saveProduct();
+                    // Exit activity
+                    finish();
                     return true;
-                }
+                // Respond to a click on the "Delete" menu option
+                case R.id.action_delete:
+                    // Pop up confirmation dialog for deletion
+                    showDeleteConfirmationDialog();
+                    return true;
+                // Respond to a click on the "Up" arrow button in the app bar
+                case android.R.id.home:
+                    // If the pet hasn't changed, continue with navigating up to parent activity
+                    // which is the {@link CatalogActivity}.
+                    if (!mProductHasChanged) {
+                        NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                        return true;
+                    }
 
-                // Otherwise if there are unsaved changes, setup a dialog to warn the user.
-                // Create a click listener to handle the user confirming that
-                // changes should be discarded.
-                DialogInterface.OnClickListener discardButtonClickListener =
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                // User clicked "Discard" button, navigate to parent activity.
-                                NavUtils.navigateUpFromSameTask(EditorActivity.this);
-                            }
-                        };
+                    // Otherwise if there are unsaved changes, setup a dialog to warn the user.
+                    // Create a click listener to handle the user confirming that
+                    // changes should be discarded.
+                    DialogInterface.OnClickListener discardButtonClickListener =
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    // User clicked "Discard" button, navigate to parent activity.
+                                    NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                                }
+                            };
 
-                // Show a dialog that notifies the user they have unsaved changes
-                showUnsavedChangesDialog(discardButtonClickListener);
-                return true;
-        }
+                    // Show a dialog that notifies the user they have unsaved changes
+                    showUnsavedChangesDialog(discardButtonClickListener);
+                    return true;
+            }
+        //}
         return super.onOptionsItemSelected(item);
     }
 
