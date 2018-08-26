@@ -23,6 +23,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
     //private boolean clicked;
     private Button mOrder;
     //int quantity;
+
     /**
      * Constructs a new {@link InventoryCursorAdapter}.
      *
@@ -82,17 +83,15 @@ public class InventoryCursorAdapter extends CursorAdapter {
         //clicked=false;
 
 
-
         //my button clicked
         mOrder.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
 
                 CatalogActivity Activity = (CatalogActivity) context;
 
                 Activity.orderProduct(id, quantity);
-                    Log.v("CLICKED", "quantity " + Activity);
+                Log.v("CLICKED", "quantity " + Activity);
                 //}
 
             }

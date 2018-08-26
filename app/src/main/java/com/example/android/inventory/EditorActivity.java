@@ -46,25 +46,39 @@ import com.example.android.inventory.data.InventoryContract.ProductEntry;
 public class EditorActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    /** Identifier for the pet data loader */
+    /**
+     * Identifier for the pet data loader
+     */
     private static final int EXISTING_PRODUCT_LOADER = 0;
 
-    /** Content URI for the existing pet (null if it's a new pet) */
+    /**
+     * Content URI for the existing pet (null if it's a new pet)
+     */
     private Uri mCurrentProductUri;
 
-    /** EditText field to enter the pet's name */
+    /**
+     * EditText field to enter the pet's name
+     */
     private EditText mNameEditText;
 
-    /** EditText field to enter the pet's breed */
+    /**
+     * EditText field to enter the pet's breed
+     */
     private EditText mSupplierEditText;
 
-    /** EditText field to enter the pet's weight */
+    /**
+     * EditText field to enter the pet's weight
+     */
     private EditText mQuantityEditText;
 
-    /** EditText field to enter the pet's gender */
+    /**
+     * EditText field to enter the pet's gender
+     */
     private EditText mPriceEditText;
 
-    /** EditText field to enter the pet's gender */
+    /**
+     * EditText field to enter the pet's gender
+     */
     private EditText mPhoneEditText;
 
     private Button mAddOne;
@@ -73,7 +87,9 @@ public class EditorActivity extends AppCompatActivity implements
 
     private Button mCall;
 
-    /** Boolean flag that keeps track of whether the pet has been edited (true) or not (false) */
+    /**
+     * Boolean flag that keeps track of whether the pet has been edited (true) or not (false)
+     */
     private boolean mProductHasChanged = false;
 
     /**
@@ -147,7 +163,7 @@ public class EditorActivity extends AppCompatActivity implements
                 String quantityString = mQuantityEditText.getText().toString().trim();
                 int quantity = Integer.parseInt(quantityString);
                 //stops it from going below zero
-                if (quantity >0 ) {
+                if (quantity > 0) {
                     quantity--;
                     quantityString = Integer.toString(quantity);
                     mQuantityEditText.setText(quantityString);
@@ -164,17 +180,16 @@ public class EditorActivity extends AppCompatActivity implements
 
                 String phoneString = mPhoneEditText.getText().toString().trim();
                 Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
-                String uri = "tel:" + phoneString ;
+                String uri = "tel:" + phoneString;
                 phoneIntent.setData(Uri.parse(uri));
 
 
                 startActivity(phoneIntent);
                 Log.v("HELLO", "I was pressed" + uri);
 
-                }
+            }
 
         });
-
 
 
         // Setup OnTouchListeners on all the input fields, so we can determine if the user

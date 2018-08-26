@@ -85,8 +85,6 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
 
-
-
                 Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
                 Uri currentProductUri = ContentUris.withAppendedId(InventoryContract.ProductEntry.CONTENT_URI, id);
 
@@ -100,8 +98,8 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
         });
 
 
-
     }
+
     //based on the work of https://github.com/Muneera-Salah/
     public void orderProduct(int id, int quantity) {
         //subtract from the quantity
@@ -123,7 +121,6 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
     }
 
     /**
-
      * Helper method to insert hardcoded product data into the database. For debugging purposes only.
      */
     private void insertProduct() {
