@@ -1,5 +1,7 @@
 Modified from this guy
 
+Create the data structure for an app that tracks the inventory of a retail store, including current stock and supplier information.
+
 
 Pets App
 ===================================
